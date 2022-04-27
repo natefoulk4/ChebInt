@@ -1,5 +1,7 @@
 module ChebInt
 
-greet() = 4
+include("Cheb.jl")
+
+export ChebNodes1D
 
 end # module
