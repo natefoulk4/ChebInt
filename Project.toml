@@ -1,0 +1,4 @@
+name = "ChebInt"
+uuid = "b4a514f0-3f45-4afd-9870-fdbccaa958a4"
+authors = ["Nathan Foulk <natefoulk4@gmail.com>"]
+version = "0.1.0"
