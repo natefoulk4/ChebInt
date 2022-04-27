@@ -2,3 +2,7 @@ name = "ChebInt"
 uuid = "b4a514f0-3f45-4afd-9870-fdbccaa958a4"
 authors = ["Nathan Foulk <natefoulk4@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
