@@ -1,5 +1,5 @@
 module ChebInt
 
-greet() = print("Hello World!")
+greet() = 4
 
 end # module

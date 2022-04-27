@@ -1,4 +1,6 @@
-using Test
+using Test, ChebInt
 
-
-@test 4+3 ==7
+@testset "Trivial tests" begin
+    @test ChebInt.greet()+3 ==7
+    @test 30/3 == 10
+end
