@@ -6,3 +6,9 @@ function ChebNodes1D!(nodes, n, a=-1.0, b=1.0)
 end 
 
 ChebNodes1D(n, a=-1.0, b=1.0) = ChebNodes1D!(zeros(n), n, a, b)
+
+function centeredmesh(n, a, b)
+    step = (b-a)/n
+    pts = range(a+step/2, b, step=step)
+    return pts
+end
