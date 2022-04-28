@@ -1,7 +1,7 @@
 # Integration methods
 using LinearAlgebra
 
-include("Cheb.jl")
+include("Meshes.jl")
 
 function solvecoeffs(xs, fxs)
     n = length(xs)

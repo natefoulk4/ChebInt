@@ -1,7 +1,7 @@
 module ChebInt
 
-include("Cheb.jl")
-include("Int.jl")
+include("Meshes.jl")
+include("Int_1D.jl")
 include("ToyProblems.jl")
 
 export ChebNodes1D, centeredmesh
