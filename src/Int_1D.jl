@@ -1,29 +1,18 @@
 # Integration methods
-using LinearAlgebra
+using LinearAlgebra, ApproxFun
 
-include("Meshes.jl")
 
-function solvecoeffs(xs, fxs)
-    n = length(xs)
-    mat = [xs[i]^(j-1) for i in 1:n, j in 1:n]
-    coeffs = inv(mat) * fxs 
-    return coeffs
-end
+const rungeIntAnswer = 0.54936030677800634434
+const rungeHalfAnswer = 0.07324432690499149
 
-function interpolate(x, C)
-        answer = 0.0
-        n = length(C)
-        for i in 1:n
-            answer += C[i]*x^(i-1)
-        end
-        return answer
-end
 
-function chebInt(f, n, a, b; nelectrons=2, nIntPoints=n*100)
-    pts = ChebNodes1D(n,a,b)
+function chebInt(f, n, a, b; nelectrons=2, nIntPoints=n*1000, useSVD=false)
+    S = Chebyshev(a..b)
+    pts = points(S, n)
     npts = length(pts)
 
     testVals = f(pts[1])
+
     nvals = length(testVals)
     evs = zeros(nvals, npts)
     if nelectrons/2 > nvals
@@ -34,15 +23,15 @@ function chebInt(f, n, a, b; nelectrons=2, nIntPoints=n*100)
         evs[:,i] .= f(pts[i])
     end
 
-    coeffs = zeros(npts, nvals)
+
     vols = zeros(nvals)
     for j in 1:nvals
-        coeffs[:,j] = solvecoeffs(pts, (@view evs[j,:]))
+        interpolatedFunction = Fun(S,ApproxFun.transform(S,(@views evs[j,:])));
         
-        vols[j] = recInt(x -> interpolate(x, (@view coeffs[:,j])), nIntPoints, a, b)
+        vols[j] = recInt(interpolatedFunction, nIntPoints, a, b)[1]
     end
 
-    return vols
+    return vols[1]
 end
 
 function recInt(f, n, a, b; nelectrons=2)
