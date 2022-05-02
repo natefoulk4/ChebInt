@@ -2,10 +2,6 @@
 using LinearAlgebra, ApproxFun
 
 
-const rungeIntAnswer = 0.54936030677800634434
-const rungeHalfAnswer = 0.07324432690499149
-
-
 function chebInt(f, n, a, b; nelectrons=2, nIntPoints=n*1000, useSVD=false)
     S = Chebyshev(a..b)
     pts = points(S, n)
@@ -24,14 +20,14 @@ function chebInt(f, n, a, b; nelectrons=2, nIntPoints=n*1000, useSVD=false)
     end
 
 
-    vols = zeros(nvals)
+    funcs = Array{Function}(undef, nvals)
     for j in 1:nvals
-        interpolatedFunction = Fun(S,ApproxFun.transform(S,(@views evs[j,:])));
-        
-        vols[j] = recInt(interpolatedFunction, nIntPoints, a, b)[1]
+        funcs[j] = Fun(S,ApproxFun.transform(S,(@views evs[j,:])));
     end
+    bigFunc(x) = [funcs[j](x) for j in 1:nvals]
+    vols = recInt(bigFunc, nIntPoints, a, b; nelectrons=nelectrons)
 
-    return vols[1]
+    return vols
 end
 
 function recInt(f, n, a, b; nelectrons=2)
