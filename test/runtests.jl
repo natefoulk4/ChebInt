@@ -17,5 +17,5 @@ end
     @test isapprox(res2[2],  runge(0.5) ; rtol=1e3)
 end
 @testset "ChebInt" begin
-    chebInt(runge, 1000, -1, 1) ≈ 0.54936030677803
+    @test chebInt(runge, 1000, -1, 1) ≈ 0.54936030677803
 end
